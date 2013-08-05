@@ -1,0 +1,15 @@
+{
+    "name": "mintao/yii-behavior-sluggable",
+    "description": "Make a unique url out of one or more db fields",
+    "license": "WTFPL",
+    "authors": [
+        {
+            "name": "Florian Fackler",
+            "email": "florian.fackler@mintao.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+
+    }
+}
