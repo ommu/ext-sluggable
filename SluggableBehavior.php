@@ -2,24 +2,24 @@
 /**
  * Sluggable Behavior for Yii Framework.
  *
- * @author Florian Fackler <florian.fackler@mintao.com>
- * @link http://mintao.com/
+ * @author    Florian Fackler <florian.fackler@mintao.com>
+ * @link      http://mintao.com/
  * @copyright Copyright &copy; 2009 Mintao GmbH & Co. KG
- * @license MIT
- * @version $Id: SluggableBehavior.php 530 2011-04-30 23:31:12Z florian.fackler $
- * @package components
+ * @license   WTFPL
+ * @version   $Id: SluggableBehavior.php 530 2011-04-30 23:31:12Z florian.fackler $
+ * @package   components
  */
 include_once __DIR__ . '/Doctrine_Inflector.php';
 
 /**
  * SluggableBehavior
  *
- * @uses CActiveRecordBehavior
+ * @uses      CActiveRecordBehavior
  * @package
- * @version $id$
+ * @version   $id$
  * @copyright 2011 mintao GmbH & Co. KG
- * @author Florian Fackler <florian.fackler@mintao.com>
- * @license PHP Version 3.0 {@link http://www.php.net/license/3_0.txt}
+ * @author    Florian Fackler <florian.fackler@mintao.com>
+ * @license   PHP Version 3.0 {@link http://www.php.net/license/3_0.txt}
  */
 class SluggableBehavior extends CActiveRecordBehavior
 {
@@ -77,21 +77,23 @@ class SluggableBehavior extends CActiveRecordBehavior
      * beforeSave
      *
      * @param mixed $event
+     *
+     * @throws CException
      * @access public
-     * @return void
      */
     public function beforeSave($event)
     {
         // Slug already created and no updated needed
-        if (true !== $this->update && ! empty($this->getOwner()->{$this->slugColumn})) {
+        if (true !== $this->update && !empty($this->getOwner()->{$this->slugColumn})) {
             Yii::trace(
                 'Slug found - no update needed.',
                 __CLASS__ . '::' . __FUNCTION__
             );
+
             return parent::beforeSave($event);
         }
 
-        if (! is_array($this->columns)) {
+        if (!is_array($this->columns)) {
             Yii::trace(
                 'Columns are not defined as array',
                 __CLASS__ . '::' . __FUNCTION__
@@ -112,7 +114,7 @@ class SluggableBehavior extends CActiveRecordBehavior
         } else {
             // Unknown columns on board?
             foreach ($this->columns as $col) {
-                if (! in_array($col, $availableColumns)) {
+                if (!in_array($col, $availableColumns)) {
                     if (false !== strpos($col, '.')) {
                         Yii::trace(
                             'Dependencies to related models found',
@@ -122,14 +124,14 @@ class SluggableBehavior extends CActiveRecordBehavior
                         $externalColumns = array_keys(
                             $this->getOwner()->$model->tableSchema->columns
                         );
-                        if (! in_array($attribute, $externalColumns)) {
+                        if (!in_array($attribute, $externalColumns)) {
                             throw new CException(
                                 "Model $model does not haz $attribute"
                             );
                         }
                     } else {
                         throw new CException(
-                            'Unable to build slug, column '.$col.' not found.'
+                            'Unable to build slug, column ' . $col . ' not found.'
                         );
                     }
                 }
@@ -168,8 +170,8 @@ class SluggableBehavior extends CActiveRecordBehavior
         // Check if slug has to be unique
         if (false === $this->unique
             ||
-            (! $this->getOwner()->getIsNewRecord()
-            && $slug === $this->getOwner()->{$this->slugColumn})
+            (!$this->getOwner()->getIsNewRecord()
+                && $slug === $this->getOwner()->{$this->slugColumn})
         ) {
             Yii::trace('Non unique slug or slug already set', __CLASS__);
             $this->getOwner()->{$this->slugColumn} = $slug;
@@ -183,6 +185,7 @@ class SluggableBehavior extends CActiveRecordBehavior
             }
             $this->getOwner()->{$this->slugColumn} = $counter > 0 ? $checkslug : $slug;
         }
+
         return parent::beforeSave($event);
     }
 
@@ -190,16 +193,18 @@ class SluggableBehavior extends CActiveRecordBehavior
      * Create a simple slug by just replacing white spaces
      *
      * @param string $str
+     *
      * @access protected
-     * @return void
+     * @return string
      */
-    protected function simpleSlug($str)
+    private function simpleSlug($str)
     {
         $slug = preg_replace('@[\s!:;_\?=\\\+\*/%&#]+@', '-', $str);
         if (true === $this->toLower) {
-            $slug = mb_strtolower($slug, Yii::app()->charset);
+            $slug = mb_strtolower($slug, \Yii::app()->charset);
         }
         $slug = trim($slug, '-');
+
         return $slug;
     }
 }
