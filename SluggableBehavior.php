@@ -26,7 +26,7 @@ class SluggableBehavior extends CActiveRecordBehavior
     /**
      * @var array Column name(s) to build a slug
      */
-    public $columns = array();
+    private $columns = array();
 
     /**
      * Wether the slug should be unique or not.
@@ -34,30 +34,95 @@ class SluggableBehavior extends CActiveRecordBehavior
      *
      * @var bool
      */
-    public $unique = true;
+    private $unique = true;
+
+    /**
+     * @param boolean $unique
+     */
+    public function setUnique($unique)
+    {
+        $this->unique = !!$unique;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getUnique()
+    {
+        return $this->unique;
+    }
 
     /**
      * Update the slug every time the row is updated?
      *
      * @var bool $update
      */
-    public $update = true;
+    private $update = true;
+
+    /**
+     * @param boolean $update
+     */
+    public function setUpdate($update)
+    {
+        $this->update = !!$update;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getUpdate()
+    {
+        return $this->update;
+    }
 
     /**
      * Name of table column to store the slug in
      *
      * @var string $slugColumn
      */
-    public $slugColumn = 'slug';
+    private $slugColumn = 'slug';
 
     /**
-     * Inflector can be turned off, so only whitespaces are
-     * replaced by dashes
-     *
-     * @var mixed
-     * @access public
+     * @param string $slugColumn
      */
-    public $useInflector = true;
+    public function setSlugColumn($slugColumn)
+    {
+        $this->slugColumn = (string)$slugColumn;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSlugColumn()
+    {
+        return $this->slugColumn;
+    }
+
+    /**
+     * If Doctrine Inflector is turned on, all special chars are
+     * replaced by standard a-z 0-9 chars.
+     * If you turn this iss only whitespaces will be
+     * replaced by dashes.
+     *
+     * @var bool
+     */
+    private $useInflector = true;
+
+    /**
+     * @param boolean $useInflector
+     */
+    public function setUseInflector($useInflector)
+    {
+        $this->useInflector = !!$useInflector;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getUseInflector()
+    {
+        return $this->useInflector;
+    }
 
     /**
      * Transform the slug to lower case
@@ -65,7 +130,24 @@ class SluggableBehavior extends CActiveRecordBehavior
      * @var boolean
      * @access public
      */
-    public $toLower = false;
+    private $toLower = false;
+
+    /**
+     * @param boolean $toLower
+     */
+    public function setToLower($toLower)
+    {
+        $this->toLower = !!$toLower;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getToLower()
+    {
+        return $this->toLower;
+    }
+
     /**
      * Default columns to build slug if none given
      *
@@ -74,9 +156,25 @@ class SluggableBehavior extends CActiveRecordBehavior
     protected $_defaultColumnsToCheck = array('name', 'title');
 
     /**
+     * @param array $columns
+     */
+    public function setColumns(array $columns)
+    {
+        $this->columns = $columns;
+    }
+
+    /**
+     * @return array
+     */
+    public function getColumns()
+    {
+        return $this->columns;
+    }
+
+    /**
      * beforeSave
      *
-     * @param mixed $event
+     * @param CModelEvent $event
      *
      * @throws CException
      * @access public
@@ -91,14 +189,6 @@ class SluggableBehavior extends CActiveRecordBehavior
             );
 
             return parent::beforeSave($event);
-        }
-
-        if (!is_array($this->columns)) {
-            Yii::trace(
-                'Columns are not defined as array',
-                __CLASS__ . '::' . __FUNCTION__
-            );
-            throw new CException('Columns have to be in array format.');
         }
 
         $availableColumns = array_keys(

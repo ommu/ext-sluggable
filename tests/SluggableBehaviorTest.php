@@ -2,6 +2,11 @@
 
 class SluggableBehaviorTest extends PHPUnit_Framework_TestCase
 {
+    public function setUp()
+    {
+        parent::setUp();
+    }
+
     public function testProperties()
     {
         $sluggable = new SluggableBehavior();
@@ -15,10 +20,56 @@ class SluggableBehaviorTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(property_exists($sluggable, '_defaultColumnsToCheck'));
     }
 
-    public function testBeforeSave()
+    /**
+     * @expectedException PHPUnit_Framework_Error
+     * @expectedExceptionMessage setColumns() must be of the type array, string given
+     */
+    public function testColumnsPropertyHasToBeAnArray()
     {
-        $event = Phake::mock('CEvent');
         $sluggable = new SluggableBehavior();
-        $sluggable->beforeSave($event);
+        $sluggable->columns = 'invalid';
+    }
+
+    public function testUniquePropertyHasToBeBoolean()
+    {
+        $sluggable = new SluggableBehavior();
+        $sluggable->unique = 0;
+        $this->assertFalse($sluggable->unique);
+        $sluggable->unique = 'I will be converted to true';
+        $this->assertTrue($sluggable->unique);
+    }
+
+    public function testUpdatePropertyHasToBeBoolean()
+    {
+        $sluggable = new SluggableBehavior();
+        $sluggable->update = 0;
+        $this->assertFalse($sluggable->update);
+        $sluggable->update = 'I will be converted to true';
+        $this->assertTrue($sluggable->update);
+    }
+
+    public function testSlugColumnIsString()
+    {
+        $sluggable = new SluggableBehavior();
+        $sluggable->slugColumn = 1;
+        $this->assertSame("1", $sluggable->slugColumn);
+    }
+
+    public function testUseInflectorPropertyHasToBeBoolean()
+    {
+        $sluggable = new SluggableBehavior();
+        $sluggable->useInflector = 0;
+        $this->assertFalse($sluggable->useInflector);
+        $sluggable->useInflector = 'I will be converted to true';
+        $this->assertTrue($sluggable->useInflector);
+    }
+
+    public function testToLowerPropertyHasToBeBoolean()
+    {
+        $sluggable = new SluggableBehavior();
+        $sluggable->toLower = 0;
+        $this->assertFalse($sluggable->toLower);
+        $sluggable->toLower = 'I will be converted to true';
+        $this->assertTrue($sluggable->toLower);
     }
 }
