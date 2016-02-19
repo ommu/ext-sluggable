@@ -268,7 +268,7 @@ class SluggableBehavior extends CActiveRecordBehavior
         } else {
             $counter = 0;
             while ($this->getOwner()->resetScope()
-                ->findByAttributes(array($this->slugColumn => $checkslug))
+                ->exists($this->slugColumn.'=:sluggable', array(':sluggable' => $checkslug))
             ) {
                 Yii::trace("$checkslug found, iterating", __CLASS__);
                 $checkslug = sprintf('%s-%d', $slug, ++$counter);
