@@ -1,23 +1,50 @@
 {
-    "name": "mintao/yii-behavior-sluggable",
-    "description": "Make a unique url out of one or more db fields",
-    "license": "WTFPL",
-    "authors": [
-        {
-            "name": "Florian Fackler",
-            "email": "florian.fackler@mintao.com"
-        }
-    ],
-    "minimum-stability": "dev",
-    "require": {
-        "yiisoft/yii": ">=1.1.14"
-    },
-    "require-dev": {
-        "phpunit/phpunit": "3.7.24",
-        "phake/phake": "1.*",
-        "phpunit/php-invoker": "1.1.3",
-        "phpunit/dbunit": "1.2.3",
-        "phpunit/phpunit-selenium": "1.3.1",
-        "phpunit/phpunit-story": "1.0.2"
-    }
+	"name": "ommu/yii-behavior-sluggable",
+	"description": "Make a unique url out of one or more db fields",
+	"keywords": [
+		"extension",
+		"yii",
+		"behavior",
+		"sluggable",
+		"ommu",
+		"platform",
+		"ommu platform"
+	],
+	"homepage": "https://github.com/ommu/yii-behavior-sluggable",
+	"type": "ommu-extension",
+	"license": "Apache-2.0",
+	"support": {
+		"issues": "https://github.com/ommu/yii-behavior-sluggable/issues",
+		"wiki": "https://github.com/ommu/yii-behavior-sluggable/wiki",
+		"source": "https://github.com/ommu/yii-behavior-sluggable"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/ommu/yii-behavior-sluggable.git"
+	},
+	"authors": [
+		{
+			"name": "Florian Fackler",
+			"email": "florian.fackler@mintao.com",
+			"role": "Creator"
+		}
+		{
+			"name": "Putra Sudaryanto",
+			"email": "putra@sudaryanto.id",
+			"homepage": "https://putra.sudaryanto.id",
+			"role": "Modifier"
+		}
+	],
+	"minimum-stability": "dev",
+	"require": {
+		"yiisoft/yii": ">=1.1.14"
+	},
+	"require-dev": {
+		"phpunit/phpunit": "3.7.24",
+		"phake/phake": "1.*",
+		"phpunit/php-invoker": "1.1.3",
+		"phpunit/dbunit": "1.2.3",
+		"phpunit/phpunit-selenium": "1.3.1",
+		"phpunit/phpunit-story": "1.0.2"
+	}
 }
