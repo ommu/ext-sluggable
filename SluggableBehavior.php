@@ -203,26 +203,28 @@ class SluggableBehavior extends CActiveRecordBehavior
             );
         } else {
             // Unknown columns on board?
-            foreach ($this->columns as $col) {
-                if (!in_array($col, $availableColumns)) {
-                    if (false !== strpos($col, '.')) {
-                        Yii::trace(
-                            'Dependencies to related models found',
-                            __CLASS__
-                        );
-                        list($model, $attribute) = explode('.', $col);
-                        $externalColumns = array_keys(
-                            $this->getOwner()->$model->tableSchema->columns
-                        );
-                        if (!in_array($attribute, $externalColumns)) {
+            if(!$this->owner->isNewRecord) {
+                foreach ($this->columns as $col) {
+                    if (!in_array($col, $availableColumns)) {
+                        if (false !== strpos($col, '.')) {
+                            Yii::trace(
+                                'Dependencies to related models found',
+                                __CLASS__
+                            );
+                            list($model, $attribute) = explode('.', $col);
+                            $externalColumns = array_keys(
+                                $this->getOwner()->$model->tableSchema->columns
+                            );
+                            if (!in_array($attribute, $externalColumns)) {
+                                throw new CException(
+                                    "Model $model does not haz $attribute"
+                                );
+                            }
+                        } else {
                             throw new CException(
-                                "Model $model does not haz $attribute"
+                                'Unable to build slug, column ' . $col . ' not found.'
                             );
                         }
-                    } else {
-                        throw new CException(
-                            'Unable to build slug, column ' . $col . ' not found.'
-                        );
                     }
                 }
             }
