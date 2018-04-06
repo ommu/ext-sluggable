@@ -7,20 +7,19 @@
 		"behavior",
 		"sluggable",
 		"ommu",
-		"platform",
 		"ommu platform"
 	],
-	"homepage": "https://github.com/ommu/yii-behavior-sluggable",
+	"homepage": "https://github.com/ommu/ext-sluggable",
 	"type": "ommu-extension",
 	"license": "Apache-2.0",
 	"support": {
-		"issues": "https://github.com/ommu/yii-behavior-sluggable/issues",
-		"wiki": "https://github.com/ommu/yii-behavior-sluggable/wiki",
-		"source": "https://github.com/ommu/yii-behavior-sluggable"
+		"issues": "https://github.com/ommu/ext-sluggable/issues",
+		"wiki": "https://github.com/ommu/ext-sluggable/wiki",
+		"source": "https://github.com/ommu/ext-sluggable"
 	},
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/ommu/yii-behavior-sluggable.git"
+		"url": "https://github.com/ommu/ext-sluggable.git"
 	},
 	"authors": [
 		{
