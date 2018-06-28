@@ -7,7 +7,7 @@
 		"behavior",
 		"sluggable",
 		"ommu",
-		"ommu platform"
+		"ommu-platform"
 	],
 	"homepage": "https://github.com/ommu/ext-sluggable",
 	"type": "ommu-extension",
