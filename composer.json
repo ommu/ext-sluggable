@@ -1,5 +1,5 @@
 {
-	"name": "ommu/yii-behavior-sluggable",
+	"name": "ommu/yii-sluggable",
 	"description": "Make a unique url out of one or more db fields",
 	"keywords": [
 		"extension",
